@@ -29,7 +29,10 @@
 		C1079B9C2595E47E001EA301 /* FileDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079B9B2595E47E001EA301 /* FileDataService.swift */; };
 		C1079BA22595E4EA001EA301 /* LocalDataFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079BA12595E4EA001EA301 /* LocalDataFile.swift */; };
 		C1079BAA2595E633001EA301 /* GEMOCKRepositoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079BA92595E633001EA301 /* GEMOCKRepositoryService.swift */; };
+		C15674CE2596188F0015DE45 /* RepositoryDetailsViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15674CD2596188F0015DE45 /* RepositoryDetailsViewTest.swift */; };
 		C1F0B2852595EB620045612F /* daily_trending_repositories.json in Resources */ = {isa = PBXBuildFile; fileRef = C1079B8D2595E3C0001EA301 /* daily_trending_repositories.json */; };
+		C1F0B28A259602A30045612F /* RepositoryDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F0B289259602A30045612F /* RepositoryDetailsViewController.swift */; };
+		C1F0B295259610ED0045612F /* UIImageView+LoadImageFromURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F0B294259610ED0045612F /* UIImageView+LoadImageFromURL.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +81,9 @@
 		C1079B9B2595E47E001EA301 /* FileDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDataService.swift; sourceTree = "<group>"; };
 		C1079BA12595E4EA001EA301 /* LocalDataFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataFile.swift; sourceTree = "<group>"; };
 		C1079BA92595E633001EA301 /* GEMOCKRepositoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GEMOCKRepositoryService.swift; sourceTree = "<group>"; };
+		C15674CD2596188F0015DE45 /* RepositoryDetailsViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsViewTest.swift; sourceTree = "<group>"; };
+		C1F0B289259602A30045612F /* RepositoryDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsViewController.swift; sourceTree = "<group>"; };
+		C1F0B294259610ED0045612F /* UIImageView+LoadImageFromURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+LoadImageFromURL.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				C1079B8C2595E31B001EA301 /* RepositoryListTests */,
+				C15674CC2596184E0015DE45 /* RepositoryDetailsTest */,
 				C1079ADD2594E954001EA301 /* Info.plist */,
 			);
 			path = GitExploreTests;
@@ -243,6 +250,7 @@
 		C1079B2625956F77001EA301 /* RepositoryDetailsView */ = {
 			isa = PBXGroup;
 			children = (
+				C1F0B289259602A30045612F /* RepositoryDetailsViewController.swift */,
 			);
 			path = RepositoryDetailsView;
 			sourceTree = "<group>";
@@ -284,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				C1079B822595BA91001EA301 /* UIViewController+ProgressSpinner.swift */,
+				C1F0B294259610ED0045612F /* UIImageView+LoadImageFromURL.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -305,6 +314,14 @@
 				C1079BA12595E4EA001EA301 /* LocalDataFile.swift */,
 			);
 			path = FileServices;
+			sourceTree = "<group>";
+		};
+		C15674CC2596184E0015DE45 /* RepositoryDetailsTest */ = {
+			isa = PBXGroup;
+			children = (
+				C15674CD2596188F0015DE45 /* RepositoryDetailsViewTest.swift */,
+			);
+			path = RepositoryDetailsTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -444,12 +461,14 @@
 				C1079B4C25958209001EA301 /* LocalizationKeys.swift in Sources */,
 				C1079B9C2595E47E001EA301 /* FileDataService.swift in Sources */,
 				C1079B1D2594F0F7001EA301 /* RepositoryListViewModel.swift in Sources */,
+				C1F0B28A259602A30045612F /* RepositoryDetailsViewController.swift in Sources */,
 				C1079AC92594E951001EA301 /* RepositoryListViewController.swift in Sources */,
 				C1079BA22595E4EA001EA301 /* LocalDataFile.swift in Sources */,
 				C1079B7325958EB8001EA301 /* RepositoryDetails.swift in Sources */,
 				C1079B29259570DE001EA301 /* SearchBar.swift in Sources */,
 				C1079AC52594E951001EA301 /* AppDelegate.swift in Sources */,
 				C1079B6D25958D80001EA301 /* GEError.swift in Sources */,
+				C1F0B295259610ED0045612F /* UIImageView+LoadImageFromURL.swift in Sources */,
 				C1079B6825958CF2001EA301 /* RepositoryService.swift in Sources */,
 				C1079B5725958B79001EA301 /* DataService.swift in Sources */,
 				C1079AC72594E951001EA301 /* SceneDelegate.swift in Sources */,
@@ -461,6 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C15674CE2596188F0015DE45 /* RepositoryDetailsViewTest.swift in Sources */,
 				C1079B932595E3E6001EA301 /* RepositoryListTests.swift in Sources */,
 				C1079BAA2595E633001EA301 /* GEMOCKRepositoryService.swift in Sources */,
 			);
@@ -632,7 +652,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xparrow.GitExplore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -651,7 +671,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xparrow.GitExplore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

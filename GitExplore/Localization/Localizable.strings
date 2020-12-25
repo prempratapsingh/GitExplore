@@ -19,6 +19,9 @@
 
 "search_placeholder" = "Search...";
 
+// Common views
+
+"back_button_title" = "Back";
 
 // Alert views
 

@@ -23,6 +23,10 @@ struct LocalizationKeys {
     
     static let search_placeholder = "search_placeholder"
     
+    // MARK: Common vies
+    
+    static let back_button_title = "back_button_title"
+    
     
     // MARK: Alert view
     static let alert_ok = "alert_ok"

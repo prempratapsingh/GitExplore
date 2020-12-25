@@ -57,6 +57,7 @@ class RepositoryListViewController: UIViewController {
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.register(RepositoryListTableViewCell.self, forCellReuseIdentifier: RepositoryListTableViewCell.identifier)
         tableView.dataSource = self
+        tableView.delegate = self
         return tableView
     }()
     
@@ -162,6 +163,21 @@ extension RepositoryListViewController: UITableViewDataSource {
         }
         cell.respositoryDetails = self.viewModel.trendingRepositories[indexPath.row]
         return cell
+    }
+}
+
+// MARK: Table view delegate methods
+
+extension RepositoryListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let repositoryDetails = self.viewModel.trendingRepositories[indexPath.row]
+        self.presentRepositoryDetailsViewController(for: repositoryDetails)
+    }
+    
+    private func presentRepositoryDetailsViewController(for repositoryDetails: RepositoryDetails) {
+        let repositoryDetailsViewController = RepositoryDetailsViewController(repositoryDetails: repositoryDetails)
+        repositoryDetailsViewController.modalPresentationStyle = .overCurrentContext
+        self.present(repositoryDetailsViewController, animated: true)
     }
 }
 
