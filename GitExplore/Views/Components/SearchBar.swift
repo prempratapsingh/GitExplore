@@ -145,7 +145,6 @@ class SearchBar: UIView {
             self.searchResultTableView.rightAnchor.constraint(equalTo: self.searchBar.rightAnchor, constant: -13),
             self.searchResultTableView.heightAnchor.constraint(equalToConstant: self.searchResultTableViewHeight)
         ])
-        self.searchResultTableView.reloadData()
         self.bringSubviewToFront(self.searchBar)
         
         let updatedHeight = self.bounds.height + self.searchResultTableViewHeight
@@ -175,7 +174,7 @@ class SearchBar: UIView {
         
         let searchOperation = BlockOperation(block: {
             self.searchViewModel?.searchRepositories(with: keyword) { [weak self] _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                DispatchQueue.main.async {
                     guard let strongSelf = self else { return }
                     strongSelf.activityIndicatorView.stopAnimating()
                     strongSelf.configureSearchResultTableView()
@@ -254,7 +253,10 @@ extension SearchBar: UISearchBarDelegate {
            !searchedRepositories.isEmpty {
             
             self.removeSearchResultTableViewIfNeeded()
-            self.clearSearchResults()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.clearSearchResults()
+            })
+            
             return
         }
         
