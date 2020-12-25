@@ -8,11 +8,19 @@
 
 // Repository list view
 
+"repositoryList_title" = "These are top 25 trending repositories for Swift programming language. You may choose to view the trending repositories list by daily, weekly or monthly basis";
 "period_daily" = "Daily";
 "period_weekly" = "Weekly";
 "period_monthly" = "Monthly";
-
+"by_author" = "by";
+"error_repositoriesLoad" = "Error loading repository list. Please try again later.";
 
 // Search bar
 
-"search_placeholder" = "Search..."
+"search_placeholder" = "Search...";
+
+
+// Alert views
+
+"alert_error" = "Error";
+"alert_ok" = "OK";

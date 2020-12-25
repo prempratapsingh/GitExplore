@@ -1,14 +1,13 @@
 //
-//  GitExploreTests.swift
+//  RepositoryListTests.swift
 //  GitExploreTests
 //
-//  Created by Prem Pratap Singh on 24/12/20.
+//  Created by Prem Pratap Singh on 25/12/20.
 //
 
 import XCTest
-@testable import GitExplore
 
-class GitExploreTests: XCTestCase {
+class RepositoryListTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
