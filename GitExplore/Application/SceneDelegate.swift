@@ -20,7 +20,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         self.window?.windowScene = windowScene
-        self.window?.rootViewController = RepositoryListViewController()
+        self.presentRepositoryListViewController()
+    }
+    
+    /// Instantiates RepositoryListViewController with the required view model dependancy and set it as the rootViewController
+    private func presentRepositoryListViewController() {
+        let repositoryService = GERepositoryService()
+        let repositoryListViewModel = RepositoryListViewModel(repositoryService: repositoryService)
+        let repositoryListViewController =  RepositoryListViewController(viewModel: repositoryListViewModel)
+        self.window?.rootViewController = repositoryListViewController
         self.window?.makeKeyAndVisible()
     }
 

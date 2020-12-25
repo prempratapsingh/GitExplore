@@ -9,6 +9,11 @@ import UIKit
 
 class RepositoryListViewController: UIViewController {
     
+    // MARK: Public properties
+    
+    var viewModel: RepositoryListViewModel!
+    
+    
     // MARK: UI controls
     
     private lazy var repositorySearchBar: SearchBar = {
@@ -18,13 +23,19 @@ class RepositoryListViewController: UIViewController {
         return searchBar
     }()
     
+    private lazy var titleLabel: UILabel = {
+        var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .systemGray
+        label.numberOfLines = 0
+        label.text = NSLocalizedString(LocalizationKeys.repositoryList_title, comment: "Title label text for repository list view")
+        return label
+    }()
+    
     private lazy var segmentedControlItems: [String] = {
-        let items = [
-            NSLocalizedString(LocalizationKeys.period_daily, comment: "Lable text for daily period"),
-            NSLocalizedString(LocalizationKeys.period_weekly, comment: "Lable text for weekly period"),
-            NSLocalizedString(LocalizationKeys.period_monthly, comment: "Lable text for monthly period")
-        ]
-        return items
+        let trendingPeriods: [TrendingPeriod] = [.daily, .weekly,. monthly]
+        return trendingPeriods.map{ $0.label }
     }()
     
     private lazy var periodSelectionSegmentedControl: UISegmentedControl = {
@@ -39,9 +50,23 @@ class RepositoryListViewController: UIViewController {
     private lazy var repositoryListTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .systemGray2
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 75
+        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.register(RepositoryListTableViewCell.self, forCellReuseIdentifier: RepositoryListTableViewCell.identifier)
+        tableView.dataSource = self
         return tableView
     }()
+    
+    
+    // MARK: Initializer
+    
+    convenience init(viewModel: RepositoryListViewModel) {
+        self.init()
+        self.viewModel = viewModel
+    }
     
     
     // MARK: Lifecycle methods
@@ -49,6 +74,7 @@ class RepositoryListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureView()
+        self.getTrendingRepositories()
     }
     
     
@@ -59,19 +85,27 @@ class RepositoryListViewController: UIViewController {
         
         self.view.addSubview(self.repositorySearchBar)
         NSLayoutConstraint.activate([
-            self.repositorySearchBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            self.repositorySearchBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20),
             self.repositorySearchBar.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 24),
             self.repositorySearchBar.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -24),
             self.repositorySearchBar.heightAnchor.constraint(equalToConstant: 50)
         ])
         
+        self.view.addSubview(self.titleLabel)
+        NSLayoutConstraint.activate([
+            self.titleLabel.topAnchor.constraint(equalTo: self.repositorySearchBar.bottomAnchor, constant: 30),
+            self.titleLabel.leftAnchor.constraint(equalTo: self.repositorySearchBar.leftAnchor, constant: 0),
+            self.titleLabel.rightAnchor.constraint(equalTo: self.repositorySearchBar.rightAnchor, constant: 0)
+        ])
+        
         self.view.addSubview(self.periodSelectionSegmentedControl)
         NSLayoutConstraint.activate([
-            self.periodSelectionSegmentedControl.topAnchor.constraint(equalTo: self.repositorySearchBar.bottomAnchor, constant: 20),
-            self.periodSelectionSegmentedControl.leftAnchor.constraint(equalTo: self.repositorySearchBar.leftAnchor, constant: 0),
-            self.periodSelectionSegmentedControl.rightAnchor.constraint(equalTo: self.repositorySearchBar.rightAnchor, constant: 0),
+            self.periodSelectionSegmentedControl.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 20),
+            self.periodSelectionSegmentedControl.leftAnchor.constraint(equalTo: self.titleLabel.leftAnchor, constant: 0),
+            self.periodSelectionSegmentedControl.rightAnchor.constraint(equalTo: self.titleLabel.rightAnchor, constant: 0),
             self.periodSelectionSegmentedControl.heightAnchor.constraint(equalToConstant: 30)
         ])
+        self.periodSelectionSegmentedControl.selectedSegmentIndex = 0
         
         self.view.addSubview(self.repositoryListTableView)
         NSLayoutConstraint.activate([
@@ -82,9 +116,52 @@ class RepositoryListViewController: UIViewController {
         ])
     }
     
+    /// Calls view model for loading list of trending repositories based on the given trending period - daily, weekly or monthly
+    private func getTrendingRepositories(for period: TrendingPeriod = .daily) {
+        self.showProgressView()
+        self.viewModel.getTrendingRepositories(for: period) { [weak self] didLoadRepositories in
+            DispatchQueue.main.async {
+                guard didLoadRepositories,
+                      let strongSelf = self else {
+                    self?.showAlertView(with: NSLocalizedString(LocalizationKeys.alert_error, comment: "Alert view title text"),
+                                        message: NSLocalizedString(LocalizationKeys.error_repositoriesLoad, comment: "Alert view message text"))
+                    return
+                }
+                strongSelf.hideProgressView()
+                strongSelf.repositoryListTableView.reloadData()
+            }
+        }
+    }
+    
     @objc
     private func didChangePeriodSelection() {
-        print(self.periodSelectionSegmentedControl.selectedSegmentIndex)
+        let selectedSegment = self.periodSelectionSegmentedControl.selectedSegmentIndex
+        guard let period = TrendingPeriod(rawValue: selectedSegment) else { return }
+        self.getTrendingRepositories(for: period)
+    }
+}
+
+
+// MARK: Table view data source methods
+
+extension RepositoryListViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.viewModel.trendingRepositories.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard !self.viewModel.trendingRepositories.isEmpty,
+              let cell = tableView.dequeueReusableCell(
+                withIdentifier: RepositoryListTableViewCell.identifier,
+                for: indexPath) as? RepositoryListTableViewCell else {
+            return RepositoryListTableViewCell()
+        }
+        cell.respositoryDetails = self.viewModel.trendingRepositories[indexPath.row]
+        return cell
     }
 }
 
