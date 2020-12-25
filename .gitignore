@@ -1,0 +1,16 @@
+# Mac stuff
+.DS_Store
+
+
+# Pod stuff
+Pods
+Podfile.lock
+
+
+# General '.ignore' extension
+*.ignore
+
+
+# Xcode stuff
+**/xcuserdata
+**/project.xcworkspace
