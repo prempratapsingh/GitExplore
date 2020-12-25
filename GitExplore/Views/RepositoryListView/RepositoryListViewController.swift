@@ -14,12 +14,22 @@ class RepositoryListViewController: UIViewController {
     var viewModel: RepositoryListViewModel!
     
     
+    // MARK: Private properties
+    
+    private var searchBarHeightConstraint: NSLayoutConstraint?
+    private var searchBarDefaultHeight: CGFloat = 50
+    private var tapGestureRecongnizer: UITapGestureRecognizer?
+    
+    
     // MARK: UI controls
     
     private lazy var repositorySearchBar: SearchBar = {
-        let searchBar = SearchBar()
+        let searchService = RepositorySearchService()
+        let seachViewModel = RepositorySearchViewModel(repositorySearchService: searchService)
+        let searchBar = SearchBar(seachViewModel: seachViewModel, defaultHeight: self.searchBarDefaultHeight)
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.backgroundColor = .white
+        searchBar.delegate = self
         return searchBar
     }()
     
@@ -70,6 +80,13 @@ class RepositoryListViewController: UIViewController {
     }
     
     
+    // MARK: Deinitializer
+    
+    deinit {
+        self.removeTapGestureRecongnizer()
+    }
+    
+    
     // MARK: Lifecycle methods
     
     override func viewDidLoad() {
@@ -81,22 +98,26 @@ class RepositoryListViewController: UIViewController {
     
     // MARK: Private methods
     
+    private func addTapGestureRecognizer() {
+        self.tapGestureRecongnizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnView))
+        self.tapGestureRecongnizer?.numberOfTapsRequired = 1
+        self.repositoryListTableView.addGestureRecognizer(self.tapGestureRecongnizer!)
+    }
+    
+    private func removeTapGestureRecongnizer() {
+        guard let tapGestureRecongnizer = self.tapGestureRecongnizer else { return }
+        self.repositoryListTableView.removeGestureRecognizer(tapGestureRecongnizer)
+        self.tapGestureRecongnizer = nil
+    }
+    
     private func configureView() {
         self.view.backgroundColor = .white
         
-        self.view.addSubview(self.repositorySearchBar)
-        NSLayoutConstraint.activate([
-            self.repositorySearchBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            self.repositorySearchBar.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 24),
-            self.repositorySearchBar.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -24),
-            self.repositorySearchBar.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
         self.view.addSubview(self.titleLabel)
         NSLayoutConstraint.activate([
-            self.titleLabel.topAnchor.constraint(equalTo: self.repositorySearchBar.bottomAnchor, constant: 30),
-            self.titleLabel.leftAnchor.constraint(equalTo: self.repositorySearchBar.leftAnchor, constant: 0),
-            self.titleLabel.rightAnchor.constraint(equalTo: self.repositorySearchBar.rightAnchor, constant: 0)
+            self.titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            self.titleLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 24),
+            self.titleLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -24)
         ])
         
         self.view.addSubview(self.periodSelectionSegmentedControl)
@@ -115,6 +136,15 @@ class RepositoryListViewController: UIViewController {
             self.repositoryListTableView.rightAnchor.constraint(equalTo: self.periodSelectionSegmentedControl.rightAnchor, constant: 0),
             self.repositoryListTableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
         ])
+        
+        self.view.addSubview(self.repositorySearchBar)
+        NSLayoutConstraint.activate([
+            self.repositorySearchBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            self.repositorySearchBar.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 24),
+            self.repositorySearchBar.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -24)
+        ])
+        self.searchBarHeightConstraint = self.repositorySearchBar.heightAnchor.constraint(equalToConstant: 50)
+        self.searchBarHeightConstraint?.isActive = true
     }
     
     /// Calls view model for loading list of trending repositories based on the given trending period - daily, weekly or monthly
@@ -134,11 +164,24 @@ class RepositoryListViewController: UIViewController {
         }
     }
     
+    /// Presents repository details view with the selected repository details
+    private func presentRepositoryDetailsViewController(for repositoryDetails: RepositoryDetails) {
+        let repositoryDetailsViewController = RepositoryDetailsViewController(repositoryDetails: repositoryDetails)
+        repositoryDetailsViewController.modalPresentationStyle = .overCurrentContext
+        self.present(repositoryDetailsViewController, animated: true)
+    }
+    
     @objc
     private func didChangePeriodSelection() {
         let selectedSegment = self.periodSelectionSegmentedControl.selectedSegmentIndex
         guard let period = TrendingPeriod(rawValue: selectedSegment) else { return }
         self.getTrendingRepositories(for: period)
+    }
+    
+    @objc
+    private func didTapOnView() {
+        self.repositorySearchBar.clearSearchResults()
+        self.removeTapGestureRecongnizer()
     }
 }
 
@@ -173,11 +216,32 @@ extension RepositoryListViewController: UITableViewDelegate {
         let repositoryDetails = self.viewModel.trendingRepositories[indexPath.row]
         self.presentRepositoryDetailsViewController(for: repositoryDetails)
     }
+}
+
+
+// MARK: Search bar delegate methods
+
+extension RepositoryListViewController: SearchBarDelegate {
+    func updateSearchBarHeight(with height: CGFloat) {
+        
+        // Add tap gesture recongnizer if search bar is about to display search result
+        if height > self.searchBarDefaultHeight {
+            self.addTapGestureRecognizer()
+        } else {
+            self.removeTapGestureRecongnizer()
+        }
+        
+        UIView.animate(
+            withDuration: 0.1,
+            animations: {
+                self.searchBarHeightConstraint?.constant = height
+                self.view.layoutIfNeeded()
+            }
+        )
+    }
     
-    private func presentRepositoryDetailsViewController(for repositoryDetails: RepositoryDetails) {
-        let repositoryDetailsViewController = RepositoryDetailsViewController(repositoryDetails: repositoryDetails)
-        repositoryDetailsViewController.modalPresentationStyle = .overCurrentContext
-        self.present(repositoryDetailsViewController, animated: true)
+    func showRepositoryDetails(for repository: RepositoryDetails) {
+        self.presentRepositoryDetailsViewController(for: repository)
     }
 }
 
