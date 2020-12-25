@@ -6,27 +6,43 @@
 //
 
 import XCTest
+@testable import GitExplore
 
-class RepositoryListTests: XCTestCase {
+class RepositoryListViewModelTests: XCTestCase {
 
+    private var repositoryListViewModel: RepositoryListViewModel?
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        let mockRepositoryService = GEMOCKRepositoryService()
+        self.repositoryListViewModel = RepositoryListViewModel(repositoryService: mockRepositoryService)
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        self.repositoryListViewModel = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func test_ViewModelLoadsRepositoryListSuccessfully() throws {
+        self.repositoryListViewModel?.getTrendingRepositories(for: .daily) { didLoadRepositories in
+            if !didLoadRepositories {
+                XCTFail()
+            }
         }
+        XCTAssertTrue(self.repositoryListViewModel?.trendingRepositories.count == 25, "RepositoryListViewModel failed to load data!")
     }
 
+    func test_ViewModelParsesRepositoryListSuccessfully() throws {
+        self.repositoryListViewModel?.getTrendingRepositories(for: .daily) { didLoadRepositories in
+            if !didLoadRepositories {
+                XCTFail()
+            }
+        }
+        
+        guard let firstRepository = self.repositoryListViewModel?.trendingRepositories.first else {
+            XCTFail()
+            return
+        }
+        XCTAssertTrue(firstRepository.name == "turbo-ios", "RepositoryListViewModel failed to parse loaded data")
+        XCTAssertTrue(firstRepository.author == "hotwired", "RepositoryListViewModel failed to parse loaded data")
+        XCTAssertTrue(firstRepository.stars == "78", "RepositoryListViewModel failed to parse loaded data")
+    }
 }
