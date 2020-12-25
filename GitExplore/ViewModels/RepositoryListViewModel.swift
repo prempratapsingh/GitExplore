@@ -44,6 +44,7 @@ class RepositoryListViewModel {
     
     private var repositoryService: RepositoryService
     private let language = "swift"
+    private var cachedRepositories = [TrendingPeriod : [RepositoryDetails]]()
     
     
     // MARK: Initializer
@@ -58,6 +59,17 @@ class RepositoryListViewModel {
     /// Calls repository service to get the list of trending repositories based on the given language abd trending period
     /// Swif is hardcoded as the language for now
     func getTrendingRepositories(for period: TrendingPeriod, responseHandler: @escaping BoolResponseHandler) {
+        
+        // Repositories don't need to be reloaded for monthly and weekly period
+        // Check if we already have weekly and monthly trending repositories, if so
+        // use the cashed repository data rather than loading them again
+        if let repositories = self.cachedRepositories[period] {
+            self.trendingRepositories = repositories
+            responseHandler(true)
+            return
+        }
+        
+        // Load trending reposiotory, if not already loaded
         self.repositoryService.getTrendingRepositories(for: language, period: period.id) { trendingRepositories, error in
             guard let repositories = trendingRepositories, error == nil else {
                 responseHandler(false)
@@ -65,6 +77,10 @@ class RepositoryListViewModel {
             }
             
             self.trendingRepositories = repositories
+            if period == .weekly || period == .monthly {
+                self.cachedRepositories[period] = repositories
+            }
+            
             responseHandler(true)
         }
     }
