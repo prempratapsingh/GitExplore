@@ -17,7 +17,6 @@ typealias RepositoryDetailsResponseHandler = ([RepositoryDetails]?, GEError?) ->
 /// Protocol for RepositoryService
 protocol RepositoryService: DataService {
     func getTrendingRepositories(for language: String, period: String, responseHandler: @escaping TrendingRepositoriesResponseHandler)
-    func getRepositoryDetails(for repositoryId: String, responseHandler: RepositoryDetailsResponseHandler)
 }
 
 /// Service for getting list of trending repositories
@@ -31,11 +30,6 @@ class GERepositoryService: RepositoryService {
             "since": period
         ]
         let networkRequest = NetworkRequest(url: url, method: NetworkMethod.get, parameters: parameters)
-        self.getData(request: networkRequest, responseHandler: responseHandler)
-    }
-    
-    /// Makes call to Rest service to get details of selected repository
-    func getRepositoryDetails(for repositoryId: String, responseHandler: RepositoryDetailsResponseHandler) {
-        
+        let _ = self.getData(request: networkRequest, responseHandler: responseHandler)
     }
 }

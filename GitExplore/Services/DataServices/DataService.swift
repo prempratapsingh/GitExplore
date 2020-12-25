@@ -15,7 +15,7 @@ to any Codable object
 
 protocol DataService: class {
     func getServiceUrl(for server: String, endpoint: String) -> String
-    func getData<T: Codable>(request: NetworkRequest, responseHandler: @escaping ResponseHandler<T>)
+    func getData<T: Codable>(request: NetworkRequest, responseHandler: @escaping ResponseHandler<T>) -> URLSessionDataTask?
 }
 
 extension DataService {
@@ -27,11 +27,11 @@ extension DataService {
     
     /// Makes call to the Rest service, handles result and error responses by the API and delegates back the response/error
     /// for further processing
-    func getData<T: Codable>(request: NetworkRequest, responseHandler: @escaping ResponseHandler<T>) {
+    func getData<T: Codable>(request: NetworkRequest, responseHandler: @escaping ResponseHandler<T>) -> URLSessionDataTask? {
         guard !request.url.isEmpty,
             var urlComponents = URLComponents(string: request.url) else {
             responseHandler(nil, NetworkError.internalError)
-            return
+            return nil
         }
         
         if let parameters = request.parameters {
@@ -44,7 +44,7 @@ extension DataService {
         
         guard let url = urlComponents.url else {
             responseHandler(nil, NetworkError.internalError)
-            return
+            return nil
         }
         
         var urlRequest = URLRequest(url: url)
@@ -89,6 +89,7 @@ extension DataService {
             }
         }
         dataTask.resume()
+        return dataTask
     }
 }
 
@@ -103,7 +104,7 @@ struct RestAPIServer {
 /// Rest API endpoints
 struct RestAPIEndpoint {
     static let repositories = "/repositories"
-    static let search = "/search"
+    static let search = "/search/repositories"
 }
 
 /// Rest API request object
@@ -134,6 +135,7 @@ enum NetworkError: String, GEError {
     case serverError = "Error occurred while connecting to the server"
     case jsonParsingError = "Unable to parse JSON response"
     case nilResponseError = "Server didn't return any result"
+    case networkRequestCancelled = "Netowrk request cancelled to prevent request overload"
     
     var description: String {
         return self.rawValue
