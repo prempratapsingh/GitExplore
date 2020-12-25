@@ -18,8 +18,17 @@ class RepositoryListViewController: UIViewController {
         return searchBar
     }()
     
+    private lazy var segmentedControlItems: [String] = {
+        let items = [
+            NSLocalizedString(LocalizationKeys.period_daily, comment: "Lable text for daily period"),
+            NSLocalizedString(LocalizationKeys.period_weekly, comment: "Lable text for weekly period"),
+            NSLocalizedString(LocalizationKeys.period_monthly, comment: "Lable text for monthly period")
+        ]
+        return items
+    }()
+    
     private lazy var periodSelectionSegmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["Daily", "Weekly", "Monthly"])
+        let segmentedControl = UISegmentedControl(items: self.segmentedControlItems)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.tintColor = .systemGray
         segmentedControl.selectedSegmentTintColor = .systemGray3

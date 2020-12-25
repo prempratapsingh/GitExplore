@@ -16,6 +16,8 @@
 		C1079AE72594E954001EA301 /* GitExploreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079AE62594E954001EA301 /* GitExploreUITests.swift */; };
 		C1079B1D2594F0F7001EA301 /* RepositoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079B1C2594F0F7001EA301 /* RepositoryListViewModel.swift */; };
 		C1079B29259570DE001EA301 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079B28259570DE001EA301 /* SearchBar.swift */; };
+		C1079B2F25957FF7001EA301 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1079B2E25957FF7001EA301 /* Localizable.strings */; };
+		C1079B4C25958209001EA301 /* LocalizationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079B4B25958209001EA301 /* LocalizationKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		C1079AE82594E954001EA301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1079B1C2594F0F7001EA301 /* RepositoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListViewModel.swift; sourceTree = "<group>"; };
 		C1079B28259570DE001EA301 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		C1079B2E25957FF7001EA301 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		C1079B4B25958209001EA301 /* LocalizationKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationKeys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,7 @@
 				C1079B142594ECDB001EA301 /* ViewModels */,
 				C1079B152594ECF0001EA301 /* Services */,
 				C1079B172594ED49001EA301 /* Utilities */,
+				C1079B2D25957FDF001EA301 /* Localization */,
 			);
 			path = GitExplore;
 			sourceTree = "<group>";
@@ -219,6 +224,15 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		C1079B2D25957FDF001EA301 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				C1079B4B25958209001EA301 /* LocalizationKeys.swift */,
+				C1079B2E25957FF7001EA301 /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -323,6 +337,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1079AD12594E954001EA301 /* LaunchScreen.storyboard in Resources */,
+				C1079B2F25957FF7001EA301 /* Localizable.strings in Resources */,
 				C1079ACE2594E954001EA301 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1079B4C25958209001EA301 /* LocalizationKeys.swift in Sources */,
 				C1079B1D2594F0F7001EA301 /* RepositoryListViewModel.swift in Sources */,
 				C1079AC92594E951001EA301 /* RepositoryListViewController.swift in Sources */,
 				C1079B29259570DE001EA301 /* SearchBar.swift in Sources */,

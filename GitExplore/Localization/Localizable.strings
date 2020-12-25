@@ -1,0 +1,18 @@
+/* 
+  Localization.strings
+  GitExplore
+
+  Created by Prem Pratap Singh on 25/12/20.
+  
+*/
+
+// Repository list view
+
+"period_daily" = "Daily";
+"period_weekly" = "Weekly";
+"period_monthly" = "Monthly";
+
+
+// Search bar
+
+"search_placeholder" = "Search..."

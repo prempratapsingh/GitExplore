@@ -17,7 +17,7 @@ class SearchBar: UIView {
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.placeholder = "Search...".localizedCapitalized
+        searchBar.placeholder = NSLocalizedString(LocalizationKeys.search_placeholder, comment: "Seach bar placeholder text")
         return searchBar
     }()
     
