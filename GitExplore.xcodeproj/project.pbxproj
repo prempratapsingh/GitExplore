@@ -14,6 +14,8 @@
 		C1079AD12594E954001EA301 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1079ACF2594E954001EA301 /* LaunchScreen.storyboard */; };
 		C1079ADC2594E954001EA301 /* GitExploreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079ADB2594E954001EA301 /* GitExploreTests.swift */; };
 		C1079AE72594E954001EA301 /* GitExploreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079AE62594E954001EA301 /* GitExploreUITests.swift */; };
+		C1079B1D2594F0F7001EA301 /* RepositoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079B1C2594F0F7001EA301 /* RepositoryListViewModel.swift */; };
+		C1079B29259570DE001EA301 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1079B28259570DE001EA301 /* SearchBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		C1079AE22594E954001EA301 /* GitExploreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitExploreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1079AE62594E954001EA301 /* GitExploreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitExploreUITests.swift; sourceTree = "<group>"; };
 		C1079AE82594E954001EA301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1079B1C2594F0F7001EA301 /* RepositoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListViewModel.swift; sourceTree = "<group>"; };
+		C1079B28259570DE001EA301 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,8 +142,10 @@
 			isa = PBXGroup;
 			children = (
 				C1079B032594EA05001EA301 /* Assets */,
+				C1079B2725956FB3001EA301 /* Components */,
 				C1079B042594EA15001EA301 /* LaunchView */,
 				C1079B022594E9EF001EA301 /* RepositoryListView */,
+				C1079B2625956F77001EA301 /* RepositoryDetailsView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -171,6 +177,7 @@
 		C1079B142594ECDB001EA301 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				C1079B1C2594F0F7001EA301 /* RepositoryListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -195,6 +202,21 @@
 			children = (
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		C1079B2625956F77001EA301 /* RepositoryDetailsView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RepositoryDetailsView;
+			sourceTree = "<group>";
+		};
+		C1079B2725956FB3001EA301 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C1079B28259570DE001EA301 /* SearchBar.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,7 +348,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1079B1D2594F0F7001EA301 /* RepositoryListViewModel.swift in Sources */,
 				C1079AC92594E951001EA301 /* RepositoryListViewController.swift in Sources */,
+				C1079B29259570DE001EA301 /* SearchBar.swift in Sources */,
 				C1079AC52594E951001EA301 /* AppDelegate.swift in Sources */,
 				C1079AC72594E951001EA301 /* SceneDelegate.swift in Sources */,
 			);
