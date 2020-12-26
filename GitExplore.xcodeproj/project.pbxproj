@@ -79,7 +79,7 @@
 		C1079B7225958EB8001EA301 /* RepositoryDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetails.swift; sourceTree = "<group>"; };
 		C1079B822595BA91001EA301 /* UIViewController+ProgressSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ProgressSpinner.swift"; sourceTree = "<group>"; };
 		C1079B872595BD2D001EA301 /* RepositoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListTableViewCell.swift; sourceTree = "<group>"; };
-		C1079B8D2595E3C0001EA301 /* daily_trending_repositories.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = daily_trending_repositories.json; path = "../../../../../../../../../XparrowSSD 1/Users/prempratapsingh/Documents/Learning/POCs/GitExplore/GitExploreTests/RepositoryListTests/daily_trending_repositories.json"; sourceTree = "<group>"; };
+		C1079B8D2595E3C0001EA301 /* daily_trending_repositories.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = daily_trending_repositories.json; sourceTree = "<group>"; };
 		C1079B922595E3E6001EA301 /* RepositoryListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListTests.swift; sourceTree = "<group>"; };
 		C1079B9B2595E47E001EA301 /* FileDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDataService.swift; sourceTree = "<group>"; };
 		C1079BA12595E4EA001EA301 /* LocalDataFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataFile.swift; sourceTree = "<group>"; };
@@ -654,8 +654,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z2D7N2NAQF;
+				DEVELOPMENT_TEAM = E7LF2VLC52;
 				INFOPLIST_FILE = GitExplore/Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -663,6 +664,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xparrow.GitExplore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -673,8 +675,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z2D7N2NAQF;
+				DEVELOPMENT_TEAM = E7LF2VLC52;
 				INFOPLIST_FILE = GitExplore/Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -682,6 +685,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xparrow.GitExplore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
