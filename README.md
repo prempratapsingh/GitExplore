@@ -17,6 +17,9 @@ need of Storyboards or Xibs
 6. Unit testing
 
 ## Features
+
+<img width="300" alt="git-explore-demo" src="https://user-images.githubusercontent.com/27926337/105564335-bc692280-5d47-11eb-8567-532d39551082.gif">
+
 It calls third party Rest API (https://hackertab.pupubird.com) for loading list of trending Github repositories with short overview like repository name, author name and star count. Github API doesn’t have its official API for trending repositories therefore this third party API has been used.
 
 User can view the trending repository list based on Day, Weak and Month duration as they select respective tab. If user taps on any of the trending repository in the list, app opens repository details view for showing more details about the selected repository.
@@ -38,6 +41,7 @@ Here is the technology stack of the project,
 Native XCTest framework has been used to write and execute unit tests for core components of the application.
 The code coverage percent is low due to the time restriction, however the unit testing approach (mock services, mock data, etc) can be reused to cover rest of the modules with unit tests.
 Test run result is 100% and looks like this,
+<img width="597" alt="Screenshot 2021-01-23 at 6 53 33 AM" src="https://user-images.githubusercontent.com/27926337/105564351-c7bc4e00-5d47-11eb-990a-cf4fc4ff68c4.png">
  
 ## Future Scope
 The app has several scope of improvements. Due to limited time, the app is developed as a minimal version.
